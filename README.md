@@ -1,6 +1,5 @@
 # SnakeScan — AI Snakebite Response System
 ### Google Gen AI Academy APAC Ideathon | #AccelerateAIwithCloudRun
-
 ---
 
 ## One Line
