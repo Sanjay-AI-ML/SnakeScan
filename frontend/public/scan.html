@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SnakeScan AI - Antivenom Directory & Identification</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            google: {
+              blue: "#1a73e8", blueHover: "#1557b0", blueLight: "#e8f0fe",
+              green: "#1e8e3e", greenLight: "#e6f4ea", red: "#d93025",
+              redHover: "#b3261e", redLight: "#fce8e6", border: "#dadce0",
+              surface: "#ffffff", background: "#f8f9fa", textPrimary: "#202124", textSecondary: "#5f6368"
+            }
+          }
+        }
+      }
+    };
+</script>
+</head>
+<body class="bg-google-background text-google-textPrimary font-sans antialiased min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white border-b border-google-border shadow-xs">
+<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-google-blueLight text-google-blue flex items-center justify-center font-bold">🐍</div>
+<span class="text-xl font-medium tracking-tight text-[#3c4043]">SnakeScan <span class="px-1.5 py-0.5 text-xs font-semibold bg-google-blueLight text-google-blue rounded">AI</span></span>
+</div>
+<div class="flex items-center gap-3">
+<a href="tel:108" class="px-4 py-2 rounded-full bg-google-red hover:bg-google-redHover text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-base">call</span> Dial 108 Emergency
+</a>
+<button onclick="handleLogout()" class="px-3.5 py-2 rounded-full border border-google-border hover:bg-gray-50 text-google-textSecondary text-xs font-semibold flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-base">logout</span> Logout
+</button>
+</div>
+</div>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 py-6 flex-1 w-full space-y-6">
+<section class="space-y-4">
+<h1 class="text-2xl font-semibold text-google-textPrimary">Instant AI Snake Identification</h1>
+<p class="text-xs sm:text-sm text-google-textSecondary">Powered by Gemini 3.6 Flash. Upload a photo for real-time identification and first-aid protocols.</p>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+<!-- Upload Card -->
+<div class="lg:col-span-6 bg-white rounded-2xl border border-google-border p-6 shadow-sm flex flex-col justify-between">
+<div class="border-2 border-dashed border-gray-300 hover:border-google-blue rounded-xl p-6 text-center cursor-pointer flex-1 flex flex-col items-center justify-center min-h-[260px] transition-colors" onclick="document.getElementById('fileInput').click()">
+<input type="file" id="fileInput" accept="image/*" class="hidden" onchange="previewImage(event)">
+<div id="uploadPrompt" class="space-y-2">
+<div class="w-12 h-12 rounded-full bg-google-blueLight text-google-blue flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-2xl">add_a_photo</span>
+</div>
+<p class="text-sm font-medium text-google-textPrimary">Click to capture or drag & drop snake photo</p>
+<p class="text-xs text-google-textSecondary">JPEG, PNG, WEBP (Max 10MB) for Gemini analysis</p>
+</div>
+<div id="imagePreviewContainer" class="hidden flex flex-col items-center w-full">
+<img id="imagePreview" class="max-h-52 w-full rounded-lg object-contain border border-google-border bg-gray-50 mb-2">
+<span class="text-xs text-google-red font-medium hover:underline">Click or select to change photo</span>
+</div>
+</div>
+<button onclick="performIdentify()" id="analyzeBtn" class="mt-5 w-full py-3 rounded-xl bg-google-blue hover:bg-google-blue-hover text-white font-medium text-sm shadow-sm transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">psychology</span>
+<span>Analyze with Gemini 3.6 Flash</span>
+</button>
+</div>
+
+<!-- Result Card -->
+<div class="lg:col-span-6 bg-white rounded-2xl border border-google-border p-6 shadow-sm flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-3 border-b border-google-border">
+<span class="text-xs font-bold text-google-textSecondary uppercase tracking-wider">Classification Result</span>
+<span id="resultBadge" class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 flex items-center gap-1">Awaiting Upload</span>
+</div>
+<div>
+<h2 id="speciesName" class="text-xl font-bold text-google-textPrimary">Upload a photo to begin</h2>
+<p id="scientificName" class="text-xs text-google-textSecondary italic mt-0.5">Gemini 3.6 Flash ready for species classification</p>
+</div>
+<div class="space-y-2 pt-1">
+<h3 class="text-xs font-bold uppercase text-google-textPrimary tracking-wider">Immediate First-Aid Protocols:</h3>
+<ul id="firstAidList" class="text-xs text-google-textSecondary space-y-2 list-disc list-inside leading-relaxed bg-gray-50 p-4 rounded-xl border border-google-border">
+<li>Keep patient calm and completely immobilize the bitten limb.</li>
+<li>Avoid tourniquets, ice, or cutting the wound.</li>
+</ul>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-google-border">
+<a href="#sectionHospitals" class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-google-blueLight text-google-blue hover:bg-blue-100 text-xs font-semibold transition-colors">
+<span class="material-symbols-outlined text-sm">local_hospital</span> Find Nearest ASV Ready Hospital Below
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="space-y-4 pt-4" id="sectionHospitals">
+<h2 class="text-xl font-semibold text-google-textPrimary">Antivenom Hospital Directory</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="hospitalGrid"></div>
+</section>
+</main>
+
+<footer class="border-t border-google-border bg-white mt-8 py-4 text-center text-xs text-google-textSecondary">
+SnakeScan AI • Tamil Nadu Antivenom Emergency Registry
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDummyKeyForSnakeScanEmergencyPortal-99",
+    authDomain: "snakescan-app.firebaseapp.com",
+    projectId: "snakescan-app",
+    storageBucket: "snakescan-app.appspot.com",
+    messagingSenderId: "1001745796796",
+    appId: "1:1001745796796:web:snakescan12345"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.handleLogout = async function() {
+    try {
+      await signOut(auth);
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Logout error:", error);
+      window.location.href = "/";
+    }
+  };
+</script>
+
+<script>
+async function loadHospitals() {
+  try {
+    const res = await fetch('/api/hospitals?location=TamilNadu');
+    const data = await res.json();
+    const hospitals = data.hospitals || data;
+    const grid = document.getElementById('hospitalGrid');
+    grid.innerHTML = '';
+    hospitals.forEach(h => {
+      grid.innerHTML += `
+        <div class="bg-white p-5 rounded-2xl border border-google-border flex flex-col justify-between shadow-xs hover:border-google-blue transition-all">
+          <div>
+            <h3 class="font-semibold text-sm text-google-textPrimary">${h.name}</h3>
+            <p class="text-xs text-google-blue mt-1 font-semibold">${h.distance}</p>
+            <span class="inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              ${h.antivenom_stock} Vials in Stock
+            </span>
+          </div>
+          <div class="pt-4 mt-4 border-t border-gray-100 flex justify-between items-center text-xs">
+            <span class="font-mono text-google-textSecondary">${h.phone}</span>
+            <a href="tel:${h.phone}" class="px-3 py-1.5 rounded-lg border border-google-border bg-white hover:bg-blue-50 text-google-blue font-medium">Call</a>
+          </div>
+        </div>`;
+    });
+  } catch(e) { console.error(e); }
+}
+
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('imagePreview').src = e.target.result;
+      document.getElementById('uploadPrompt').classList.add('hidden');
+      document.getElementById('imagePreviewContainer').classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+async function performIdentify() {
+  const fileInput = document.getElementById('fileInput');
+  const btn = document.getElementById('analyzeBtn');
+  if (!fileInput.files[0]) { alert("Please select an image first."); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-lg">progress_activity</span> <span>Analyzing with Gemini 3.6 Flash...</span>`;
+
+  const formData = new FormData();
+  formData.append('file', fileInput.files[0]);
+  formData.append('location', 'Tamil Nadu');
+
+  try {
+    const res = await fetch('/api/identify', { method: 'POST', body: formData });
+    const json = await res.json();
+    const data = json.data || json;
+    
+    document.getElementById('speciesName').innerText = data.species || "Identified Specimen";
+    document.getElementById('scientificName').innerText = data.description || "Gemini 3.6 Flash Species Classification";
+    
+    const badge = document.getElementById('resultBadge');
+    if (data.is_venomous) {
+      badge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 flex items-center gap-1";
+      badge.innerHTML = `<span class="material-symbols-outlined text-xs">warning</span> Highly Venomous`;
+    } else {
+      badge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 flex items-center gap-1";
+      badge.innerHTML = `<span class="material-symbols-outlined text-xs">check_circle</span> Non-Venomous`;
+    }
+    
+    if (data.first_aid) {
+      const list = document.getElementById('firstAidList');
+      list.innerHTML = '';
+      (Array.isArray(data.first_aid) ? data.first_aid : [data.first_aid]).forEach(step => {
+        list.innerHTML += `<li>${step}</li>`;
+      });
+    }
+  } catch (err) {
+    alert("Analysis failed. Please try again.");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<span class="material-symbols-outlined text-lg">psychology</span> <span>Analyze with Gemini 3.6 Flash</span>`;
+  }
+}
+
+loadHospitals();
+</script>
+</body>
+</html>

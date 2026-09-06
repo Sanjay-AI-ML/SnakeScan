@@ -1,0 +1,7 @@
+.env
+*.pyc
+__pycache__/
+serviceAccountKey.json
+node_modules/
+frontend/dist/
+.DS_Store

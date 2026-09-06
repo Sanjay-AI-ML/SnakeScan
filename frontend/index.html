@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SnakeScan - Emergency Snake Identification & Antivenom Locator</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "google-blue": "#1a73e8",
+            "google-blue-hover": "#1557b0",
+            "google-red": "#d93025",
+            "google-red-hover": "#b3261e",
+            "google-green": "#1e8e3e",
+            "google-border": "#dadce0",
+            "google-text-primary": "#202124",
+            "google-text-secondary": "#5f6368",
+            "google-bg": "#f8f9fa",
+            "google-surface": "#ffffff",
+          },
+          fontFamily: {
+            sans: ['Roboto', 'Arial', 'sans-serif'],
+          },
+          boxShadow: {
+            'google-card': '0 1px 3px 0 rgba(60,64,67,0.08), 0 4px 8px 3px rgba(60,64,67,0.04)',
+            'google-sm': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-google-bg text-google-text-primary min-h-screen flex flex-col justify-between antialiased">
+<!-- Top Minimal Utility Bar -->
+<header class="w-full px-4 sm:px-6 py-3.5 flex items-center justify-between border-b border-google-border/70 bg-google-surface sticky top-0 z-30 shadow-sm">
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-lg overflow-hidden shadow-sm border border-google-blue/25 shrink-0 flex items-center justify-center bg-white text-google-blue font-bold">🐍</div>
+    <div class="flex flex-col">
+      <div class="flex items-center gap-1.5">
+        <span class="font-bold text-lg sm:text-xl text-google-text-primary tracking-tight">SnakeScan</span>
+        <span class="px-1.5 py-0.5 text-[10px] font-bold bg-google-blue/10 text-google-blue rounded border border-google-blue/25 uppercase">AI</span>
+      </div>
+      <span class="text-xs text-google-text-secondary font-normal">Instant Snake Identification & Antivenom Locator</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-3 sm:gap-4">
+    <a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#fce8e6] text-[#a51d24] border border-[#f5c6cb] hover:bg-[#fad2cf] transition-colors text-xs font-semibold shadow-sm" href="tel:108">
+      <span class="material-symbols-outlined text-base animate-pulse">call</span>
+      <span class="font-bold">Emergency: Dial 108</span>
+    </a>
+  </div>
+</header>
+
+<!-- Main Container -->
+<main class="flex-1 flex items-center justify-center px-4 py-6 sm:py-10">
+  <div class="w-full max-w-[540px] space-y-4">
+    <!-- Clean Emergency High-Contrast Action Banner -->
+    <section class="bg-[#fce8e6] border border-[#f5c6cb] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+      <div class="flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-google-red/10 flex items-center justify-center text-google-red shrink-0 border border-google-red/20">
+          <span class="material-symbols-outlined text-[24px]">emergency</span>
+        </div>
+        <div>
+          <h2 class="text-sm font-semibold text-[#a51d24]">Need immediate scan?</h2>
+          <p class="text-xs text-[#5c1d24] mt-0.5 leading-relaxed">Bypass login for instant bite triage & species identification. No registration required.</p>
+        </div>
+      </div>
+      <button class="w-full sm:w-auto shrink-0 px-4 py-2.5 bg-google-red hover:bg-google-red-hover text-white rounded-lg text-xs font-semibold uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-1.5" onclick="triggerGuestScan()">
+        <span>Start Emergency Scan</span>
+        <span class="material-symbols-outlined text-base">photo_camera</span>
+      </button>
+    </section>
+
+    <!-- Main Sign-In Card -->
+    <div class="bg-google-surface border border-google-border rounded-2xl p-6 sm:p-7 shadow-google-card">
+      <div class="mb-5">
+        <h1 class="text-2xl font-normal text-google-text-primary tracking-tight">Sign in to SnakeScan</h1>
+        <p class="text-xs sm:text-sm text-google-text-secondary mt-1">Access your scan history and saved hospital alerts</p>
+      </div>
+
+      <!-- Clean Tabs: Sign In / Create Account -->
+      <div class="flex border-b border-google-border mb-6 gap-2">
+        <button class="pb-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-google-blue text-google-blue transition-colors flex items-center gap-1.5" id="tab-signin" onclick="switchAuthTab('signin')">
+          <span class="material-symbols-outlined text-[18px]">login</span>
+          <span>Sign In</span>
+        </button>
+        <button class="pb-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-google-text-secondary hover:text-google-text-primary transition-colors flex items-center gap-1.5" id="tab-signup" onclick="switchAuthTab('signup')">
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+          <span>Create Account</span>
+        </button>
+      </div>
+
+      <!-- Streamlined Auth Form -->
+      <form class="space-y-4" onsubmit="event.preventDefault(); handleEmailAuth();">
+        <div id="name-field-wrapper" class="hidden">
+          <label class="block text-xs font-medium text-google-text-secondary mb-1.5" for="auth-name">Full Name</label>
+          <input class="w-full px-3.5 py-2.5 bg-white border border-google-border rounded-lg text-sm text-google-text-primary focus:border-google-blue focus:outline-none" id="auth-name" placeholder="Enter your name" type="text">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-google-text-secondary mb-1.5" for="auth-email">Email Address</label>
+          <input class="w-full px-3.5 py-2.5 bg-white border border-google-border rounded-lg text-sm text-google-text-primary focus:border-google-blue focus:outline-none" id="auth-email" placeholder="name@example.com" required type="email">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-medium text-google-text-secondary" for="auth-password">Password</label>
+            <button class="text-xs font-medium text-google-blue hover:underline" id="eye-text" onclick="togglePasswordVisibility()" type="button">Show</button>
+          </div>
+          <input class="w-full px-3.5 py-2.5 bg-white border border-google-border rounded-lg text-sm text-google-text-primary focus:border-google-blue focus:outline-none" id="auth-password" placeholder="Enter your password" required type="password">
+        </div>
+
+        <button class="w-full py-2.5 bg-google-blue hover:bg-google-blue-hover text-white rounded-lg text-sm font-medium transition-colors shadow-google-sm flex items-center justify-center gap-1.5" id="btn-submit" type="submit">
+          <span id="btn-submit-text">Sign In</span>
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+
+        <!-- Divider -->
+        <div class="relative flex py-1 items-center">
+          <div class="flex-grow border-t border-google-border"></div>
+          <span class="flex-shrink mx-3 text-xs text-google-text-secondary font-medium uppercase">or</span>
+          <div class="flex-grow border-t border-google-border"></div>
+        </div>
+
+        <!-- Firebase Google Sign-In Button -->
+        <button class="w-full py-2.5 px-4 bg-white border border-google-border hover:bg-google-bg text-google-text-primary rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2.5 shadow-sm" onclick="handleGoogleSignIn()" type="button">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+          </svg>
+          <span>Sign in with Google</span>
+        </button>
+
+        <!-- Continue as Guest Secondary Button -->
+        <button class="w-full py-2.5 px-4 bg-white border border-google-border hover:bg-google-bg text-google-text-primary rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-sm" onclick="triggerGuestScan()" type="button">
+          <span class="material-symbols-outlined text-[18px] text-google-blue">person</span>
+          <span>Continue as Guest</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- Clean Footer -->
+<footer class="w-full border-t border-google-border bg-google-surface px-4 sm:px-6 py-4 mt-6">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-google-text-secondary">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="font-medium text-google-text-primary">Emergency Helplines:</span>
+      <a class="font-bold text-google-red hover:underline" href="tel:108">Ambulance: 108</a>
+      <span>•</span>
+      <a class="font-medium text-google-blue hover:underline" href="tel:104">Snakebite Helpline: 104</a>
+    </div>
+    <div class="text-[11px] text-google-text-secondary">
+      Powered by <strong>Gemini 3.6 Flash</strong> & Firebase Auth
+    </div>
+  </div>
+</footer>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  // Replace with your Firebase configuration parameters
+  const firebaseConfig = {
+    apiKey: "AIzaSyDummyKeyForSnakeScanEmergencyPortal-99",
+    authDomain: "snakescan-app.firebaseapp.com",
+    projectId: "snakescan-app",
+    storageBucket: "snakescan-app.appspot.com",
+    messagingSenderId: "1001745796796",
+    appId: "1:1001745796796:web:snakescan12345"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  window.handleGoogleSignIn = async function() {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Firebase Google Auth Success:", user.email);
+      window.location.href = "/scan.html";
+    } catch (error) {
+      console.error("Google Auth Error:", error.message);
+      // Fallback redirect for smooth user experience if config is placeholder
+      window.location.href = "/scan.html";
+    }
+  };
+
+  window.handleEmailAuth = async function() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    const isSignUp = document.getElementById('tab-signup').classList.contains('border-google-blue');
+
+    try {
+      if (isSignUp) {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+      window.location.href = "/scan.html";
+    } catch (error) {
+      alert("Authentication notice: " + error.message);
+      window.location.href = "/scan.html";
+    }
+  };
+</script>
+
+<script>
+  let isSignUpMode = false;
+
+  function switchAuthTab(mode) {
+    isSignUpMode = (mode === 'signup');
+    const signInBtn = document.getElementById('tab-signin');
+    const signUpBtn = document.getElementById('tab-signup');
+    const nameWrapper = document.getElementById('name-field-wrapper');
+    const submitText = document.getElementById('btn-submit-text');
+
+    if (isSignUpMode) {
+      signInBtn.className = "pb-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-google-text-secondary hover:text-google-text-primary transition-colors flex items-center gap-1.5";
+      signUpBtn.className = "pb-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-google-blue text-google-blue transition-colors flex items-center gap-1.5";
+      nameWrapper.classList.remove('hidden');
+      submitText.innerText = "Create Account";
+    } else {
+      signUpBtn.className = "pb-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-google-text-secondary hover:text-google-text-primary transition-colors flex items-center gap-1.5";
+      signInBtn.className = "pb-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-google-blue text-google-blue transition-colors flex items-center gap-1.5";
+      nameWrapper.classList.add('hidden');
+      submitText.innerText = "Sign In";
+    }
+  }
+
+  function togglePasswordVisibility() {
+    const passField = document.getElementById('auth-password');
+    const eyeText = document.getElementById('eye-text');
+    if (passField.type === 'password') {
+      passField.type = 'text';
+      eyeText.innerText = 'Hide';
+    } else {
+      passField.type = 'password';
+      eyeText.innerText = 'Show';
+    }
+  }
+
+  function triggerGuestScan() {
+    window.location.href = "/scan.html";
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-brand-950 text-gray-100 font-sans; -webkit-font-smoothing: antialiased; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { @apply bg-brand-900; }
+  ::-webkit-scrollbar-thumb { @apply bg-brand-600 rounded-full; }
+}
+
+@layer components {
+  .btn-primary   { @apply bg-brand-500 hover:bg-brand-400 text-white font-semibold px-6 py-3 rounded-2xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn-danger    { @apply bg-danger hover:bg-red-700 text-white font-bold px-6 py-3 rounded-2xl transition-all duration-200 disabled:opacity-40; }
+  .btn-secondary { @apply bg-brand-700 hover:bg-brand-600 text-gray-200 font-medium px-4 py-2.5 rounded-xl transition-all; }
+  .card          { @apply bg-brand-800 border border-brand-600/30 rounded-2xl p-5; }
+  .input-field   { @apply bg-brand-700 border border-brand-600/50 text-gray-100 rounded-xl px-4 py-3 w-full focus:outline-none focus:border-brand-500 transition-colors placeholder-gray-500; }
+  .severity-critical { @apply bg-red-950 border-red-500/50 text-red-400; }
+  .severity-high     { @apply bg-orange-950 border-orange-500/50 text-orange-400; }
+  .severity-low      { @apply bg-green-950 border-green-500/50 text-green-400; }
+}
+
+/* Thinking animation */
+@keyframes thinking {
+  0%,100% { opacity: 0.4; }
+  50%     { opacity: 1; }
+}
+.thinking-pulse { animation: thinking 1.5s ease-in-out infinite; }
+
+/* Step reveal */
+@keyframes stepIn {
+  from { opacity:0; transform:translateX(-8px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+.step-in { animation: stepIn 0.3s ease-out forwards; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { animation: fadeUp 0.4s ease-out; }
+
+/* Scan line effect */
+@keyframes scan {
+  0%   { top: 0%; }
+  100% { top: 100%; }
+}
+.scan-line {
+  position: absolute; left: 0; right: 0;
+  height: 2px; background: rgba(34,197,94,0.8);
+  box-shadow: 0 0 8px rgba(34,197,94,0.8);
+  animation: scan 2s linear infinite;
+}
+
+/* Critical flash */
+@keyframes criticalFlash {
+  0%,100% { background-color: rgba(220,38,38,0.1); }
+  50%     { background-color: rgba(220,38,38,0.25); }
+}
+.critical-flash { animation: criticalFlash 1s ease-in-out 3; }
